@@ -1,0 +1,58 @@
+/**
+ * The CSS values that are wrapped in '/*variable' comments are intended for use
+ * by https://www.drupal.org/project/style_settings. Enable that module to
+ * have those CSS variables exposed in the settings UI.
+ */
+
+/* Create a checkerboard background to verify the image opacity level.*/
+div.FOO-preview-swatch {
+  position: relative;
+  width: 220px;
+  padding: 20px 20px;
+  border: solid LightGrey 1px;
+  background-image: -moz-linear-gradient(45deg, Gray 25%, transparent 25%),
+  -moz-linear-gradient(-45deg, Gray 25%, transparent 25%),
+  -moz-linear-gradient(45deg, transparent 75%, Gray 75%),
+  -moz-linear-gradient(-45deg, transparent 75%, Gray 75%);
+  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, Gray), color-stop(0.25, transparent)),
+  -webkit-gradient(linear, 0 0, 100% 100%, color-stop(0.25, Gray), color-stop(0.25, transparent)),
+  -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.75, transparent), color-stop(0.75, Gray)),
+  -webkit-gradient(linear, 0 0, 100% 100%, color-stop(0.75, transparent), color-stop(0.75, Gray));
+  background-position: 0 0, 10px 0, 10px -10px, 0 10px;
+  -webkit-background-size: 20px 20px;
+     -moz-background-size: 20px 20px;
+          background-size: 20px 20px;
+}
+
+div.FOO-preview-object {
+  height: 165px;
+       opacity: 0.9; /*variable:FOO_img_opacity*/
+  background-image: url(/modules/image/sample.png); /*variable:FOO_imgurl*/
+  background-size: 220px 165px;
+
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0.9); /*variable:FOO_img_opacity*/
+  filter: alpha(opacity=0.9); /*variable:FOO_img_opacity*/
+  -moz-opacity: 0.9; /*variable:FOO_img_opacity*/
+}
+
+div.FOO-preview-caption {
+  margin-top: 5px;
+  text-align: center; /*variable:FOO_caption_align*/
+  border-width: 5px; /*variable:FOO_borderwidth*/
+  border-style: solid;
+  border-color: IndianRed; /*variable:FOO_bordercolor*/
+  font-size: 110%; /*variable:FOO_fontsize*/
+}
+
+div.style-settings-image-preview img {
+       opacity: 0.9; /*variable:FOO_img_opacity*/
+
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0.9); /*variable:FOO_img_opacity*/
+  filter: alpha(opacity=0.9); /*variable:FOO_img_opacity*/
+  -moz-opacity: 0.9; /*variable:FOO_img_opacity*/
+}
+
+/* Make sure the preview template text area doesn't get too small.*/
+fieldset#edit-foo-preview-details {
+  min-width: 330px;
+}

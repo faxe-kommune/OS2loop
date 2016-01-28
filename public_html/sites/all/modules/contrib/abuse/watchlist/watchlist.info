@@ -1,0 +1,11 @@
+name = watchlist
+description = A filter/check system to validate content on the site
+package = "Administration"
+version = VERSION
+core = 7.x
+dependencies[] = abuse
+
+; Information added by drush on 2015-07-30
+version = "7.x-1.x-dev-dev"
+project = "abuse"
+datestamp = "1438271896"

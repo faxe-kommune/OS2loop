@@ -1,0 +1,12 @@
+name = Abuse
+description = An abuse system to flag content on the site
+configure = admin/config/people/abuse
+package = "Administration"
+version = 7.x-1.0-alpha-dev
+core = 7.x
+dependencies[] = entity
+
+; Information added by drush on 2015-07-30
+version = "7.x-1.x-dev-dev"
+project = "abuse"
+datestamp = "1438271896"

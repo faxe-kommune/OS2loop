@@ -1,0 +1,17 @@
+/**
+ * CUSTOM CSS
+ *
+ * Put your custom CSS and CSS overrides in this file and rename it
+ * custom.css. Your changes will not be overwritten when upgrading to a new
+ * version of this module. You can also use a custom-rtl.css file for the
+ * equivalent in RTL.
+ *
+ * Steps to activate custom.css:
+ * 1. Add your custom CSS to this file
+ * 2. Rename this file to custom.css
+ * 3. Clear cached data at admin/settings/performance
+ *
+ * If you put your custom CSS here it will be:
+ * - rewritten if it contains Drupal variables 
+ * - loaded as the last stylesheet so no other CSS will overwrite it.
+ */

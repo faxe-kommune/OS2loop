@@ -1,0 +1,11 @@
+name = Style Settings demo
+description = A working example of a settings page for CSS variables.
+core = 7.x
+
+dependencies[] = style_settings
+dependencies[] = image
+
+; Information added by drush on 2015-09-14
+version = "7.x-2.x-dev"
+project = "style_settings"
+datestamp = "1442221512"
