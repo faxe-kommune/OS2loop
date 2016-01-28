@@ -45,6 +45,7 @@ sessions
 tmp
 share
 others
+private
 
 # Files that might appear on external disks
 .Spotlight-V100
