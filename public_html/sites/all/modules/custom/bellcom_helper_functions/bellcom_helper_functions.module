@@ -1,0 +1,87 @@
+<?php
+
+/*
+ * Search for value in multi-dimensional array
+ */
+function in_array_recursive($needle, $haystack, $strict = FALSE) {
+  foreach ($haystack as $item) {
+    if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && in_array_recursive($needle, $item, $strict))) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/*
+ * Get top level taxonomy term
+ */
+function taxonomy_term_top_level_load($tid) {
+  $taxonomy_term_parents = taxonomy_get_parents_all($tid);
+  $taxonomy_term_top_level = NULL;
+
+  // Run through all parents
+  foreach($taxonomy_term_parents as $taxonomy_term_parent) {
+    $taxonomy_term_parent_parents = taxonomy_get_parents_all($taxonomy_term_parent->tid);
+
+    if ($taxonomy_term_parent_parents != false) {
+      $taxonomy_term_top_level = $taxonomy_term_parent;
+    }
+  }
+
+  return $taxonomy_term_top_level;
+}
+
+
+
+/**
+ * Create google map
+ * @param $address
+ * @param $city_with_zipcode
+ *
+ * @return array
+ * @throws \Exception
+ */
+function _bellcom_create_google_map($field_address, $field_city_with_zipcode) {
+  $element = array();
+
+  // Figure out what to display for each item we have here.
+  $embed = (int) FALSE;
+  $static = (int) TRUE;
+  $link = (int) FALSE;
+  $text = (int) FALSE;
+
+  $height = '180px';
+  $width = '600px';
+  $link_text = '';
+  $bubble = TRUE;
+  $zoom_level = 16;
+  $lang_to_use = 'da';
+  $map_type = 'p';
+
+  // For some reason, static gmaps accepts a different value for map type.
+  $static_map_types = array('m' => 'roadmap', 'k' => 'satellite', 'h' => 'hybrid', 'p' => 'terrain');
+
+  $url_value = urlencode(check_plain($field_address . ', ' . $field_city_with_zipcode));
+  $address_value = check_plain($field_address . ', ' . $field_city_with_zipcode);
+  $address = $text ? $address_value : '';
+
+  $element[] = array('#markup' => theme('simple_gmap_output', array(
+    'include_map' => $embed,
+    'include_static_map' => $static,
+    'include_link' => $link,
+    'include_text' => $text,
+    'width' => $width,
+    'height' => $height,
+    'url_suffix' => $url_value,
+    'zoom' => $zoom_level,
+    'information_bubble' => $bubble,
+    'link_text' => ($link_text == 'use_address') ? $address_value : $link_text,
+    'address_text' => $address,
+    'map_type' => $map_type,
+    'langcode' => $lang_to_use,
+    'static_map_type' => $static_map_types[$map_type],
+  )));
+
+  return $element;
+}

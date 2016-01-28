@@ -1,0 +1,108 @@
+<?php
+
+/*
+ * Get raw user information.
+ */
+function bellcom_user_get_raw_information($uid) {
+  if ( ! $entity = user_load($uid)) {
+    return false;
+  }
+  $data = array();
+
+  // Email.
+  if ($entity->mail) {
+    $data['email'] = $entity->mail;
+  }
+
+  // Firstname.
+  if ($field = field_get_items('user', $entity, 'field_name_first')) {
+    $data['firstname'] = $field[0]['value'];
+  }
+
+  // Lastname.
+  if ($field = field_get_items('user', $entity, 'field_name_last')) {
+    $data['lastname'] = $field[0]['value'];
+  }
+
+  // Full name.
+  if (isset($data['firstname']) || isset($data['lastname'])) {
+    if (isset($data['firstname']) && ! isset($data['lastname'])) {
+      $data['full_name'] = $data['firstname'];
+    }
+    elseif ( ! isset($data['firstname']) && isset($data['lastname'])) {
+      $data['full_name'] = $data['lastname'];
+    }
+    else {
+      $data['full_name'] = $data['firstname'] . ' ' . $data['lastname'];
+    }
+  }
+
+  // Address.
+  if ($field = field_get_items('user', $entity, 'field_address')) {
+    $data['address'] = $field[0]['value'];
+  }
+
+  // Zipcode.
+  if ($field = field_get_items('user', $entity, 'field_zipcode')) {
+    $data['zipcode'] = $field[0]['value'];
+  }
+
+  // City.
+  if ($field = field_get_items('user', $entity, 'field_city')) {
+    $data['city'] = $field[0]['value'];
+  }
+
+  // Country.
+  if ($field = field_get_items('user', $entity, 'field_country')) {
+    $data['country'] = $field[0]['value'];
+  }
+
+  // Location.
+  if (isset($data['city'])) {
+    $data['location'] = $data['city'];
+  }
+
+  return $data;
+}
+
+/*
+ * Get renderable user information.
+ */
+function bellcom_user_get_renderable_information($uid) {
+  if (!$entity = user_load($uid)) {
+    return false;
+  }
+  $data = array();
+
+  // Firstname.
+  if ($field = field_get_items('user', $entity, 'field_name_first')) {
+    $data['firstname'] = field_view_value('user', $entity, 'field_name_first', $field[0]);
+  }
+
+  // Lastname.
+  if ($field = field_get_items('user', $entity, 'field_name_last')) {
+    $data['lastname'] =  field_view_value('user', $entity, 'field_name_last', $field[0]);
+  }
+
+  // Address.
+  if ($field = field_get_items('user', $entity, 'field_address')) {
+    $data['address'] = field_view_value('user', $entity, 'field_address', $field[0]);
+  }
+
+  // Zipcode.
+  if ($field = field_get_items('user', $entity, 'field_zipcode')) {
+    $data['zipcode'] = field_view_value('user', $entity, 'field_zipcode', $field[0]);
+  }
+
+  // City.
+  if ($field = field_get_items('user', $entity, 'field_city')) {
+    $data['city'] = field_view_value('user', $entity, 'field_city', $field[0]);
+  }
+
+  // Country.
+  if ($field = field_get_items('user', $entity, 'field_country')) {
+    $data['country'] = field_view_value('user', $entity, 'field_country', $field[0]);
+  }
+
+  return $data;
+}

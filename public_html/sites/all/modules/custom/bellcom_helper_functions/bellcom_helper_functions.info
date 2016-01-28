@@ -1,0 +1,4 @@
+name        = 'Helper functions'
+description = 'Contains alot of PHP helper functions for Bellcom solutions'
+core        = 7.x
+package     = 'Bellcom'

@@ -1,0 +1,88 @@
+<?php
+
+/**
+ * Implements hook_field_group_formatter_info().
+ */
+function bellcom_box_field_group_formatter_info() {
+  return array(
+    'form' => array(
+      'os2-box' => array(
+        'label' => t('OS2 box'),
+        'description' => t('Wraps fields with .os2-box.'),
+        'instance_settings' => array('classes' => '',),
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_group_format_settings().
+ *
+ * @params Object $group The group object.
+ * @return Array $form The form element for the format settings.
+ */
+function bellcom_box_field_group_format_settings($group) {
+  $form = array();
+
+  // Add optional instance_settings.
+  switch ($group->format_type) {
+    case 'os2-box':
+      break;
+  }
+
+  return $form;
+}
+
+/**
+ * Implements hook_field_group_pre_render().
+ *
+ * @param Array $elements by address.
+ * @param Object $group The Field group info.
+ */
+function bellcom_box_field_group_pre_render(&$element, $group, &$form) {
+
+  switch ($group->format_type) {
+
+    // Normal or collapsible div.
+    case 'os2-box':
+      $box = array(
+        '#type' => 'markup',
+        '#weight' => $group->weight,
+      );
+
+      if (isset($group->label)) {
+        $box['#prefix'] = '<div class="os2-box">
+          <div class="os2-box-heading"><h3 class="os2-box-heading-title">' . check_plain(t($group->label)) . '</h3></div>
+          <div class="os2-box-body">';
+        $box['#suffix'] = '</div></div>';
+      }
+      else {
+        $box['#prefix'] = '<div class="os2-box"><div class="os2-box-body">';
+        $box['#suffix'] = '</div></div>';
+      }
+      $element += $box;
+
+      break;
+  }
+}
+
+/**
+ * Implements hook_field_group_build_pre_render_alter().
+ * @param Array $elements by address.
+ */
+function bellcom_box_field_group_build_pre_render_alter(&$element) {
+  // While custom fields and groups are present at the root level of the form
+  // e.g. $element['field_custom_field'] they will later be moved into
+  // $element['additional_settings']['group']['#groups']['additional_settings']['field_custom_field']
+  // which is where we need to alter them.
+
+  // Use the states API to set the visibility of a fieldset within a vertical
+  // tab based on the value of a custom checkbox field.
+  if (isset($element['group_parent_vertical_tab'])) {
+    $element['additional_settings']['group']['#groups']['additional_settings']['group_parent_vertical_tab']['group_child_fieldset']['#states'] = array(
+      'visible' => array(
+        ':input[name="field_custom_checkbox[' . LANGUAGE_NONE . ']"]' => array('checked' => TRUE),
+      ),
+    );
+  }
+}

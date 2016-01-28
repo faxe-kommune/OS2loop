@@ -1,0 +1,4 @@
+name        = 'Box implementation'
+description = 'Adds box for field groups'
+core        = 7.x
+package     = 'Bellcom'

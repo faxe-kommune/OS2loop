@@ -1,0 +1,4 @@
+name        = 'Bellcom view modes'
+description = 'Contains view modes for themes.'
+core        = 7.x
+package     = 'Bellcom custom'
