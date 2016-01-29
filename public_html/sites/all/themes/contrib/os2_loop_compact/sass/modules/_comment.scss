@@ -16,11 +16,11 @@
   padding-bottom: 1.5em;
 
   &.is-sticky {
-    border: 1px solid $green;
+    border: 1px solid $brand;
     margin-bottom: 2.5em;
     padding: 1.5em;
 
-    background-color: lighten($green-lighter, 15%);
+    background-color: lighten($brand-lighter, 15%);
 
     @include border-radius($border-radius);
   }
@@ -120,7 +120,7 @@
     padding: 0;
   }
 
-  @include custom-links($green, $green, $green);
+  @include custom-links($brand, $brand, $brand);
 
   a {
     &:before {
@@ -131,7 +131,7 @@
     }
 
     &:hover {
-      color: $green;
+      color: $brand;
     }
   }
 }

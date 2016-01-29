@@ -1,3 +1,13 @@
+Compact additions
+==========
+
+Changelog:
+- move messages print in page.tpl.php to above typeahead
+- give messages a max-width
+- rename all SCSS variables named $green to $brand as its customizable.
+
+
+
 Loop theme
 ==========
 

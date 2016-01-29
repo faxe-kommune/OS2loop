@@ -19,11 +19,11 @@ $border-radius:       .4em;
 
 
 
-$green:               #5DCEFD;
-$green-dark:          lighten($green, 45%);
-$green-darker:        darken($green, 10%);
-$green-light:         lighten($green, 10%);
-$green-lighter:       #d6ff9a;
+$brand:               #5DCEFD;
+$brand-dark:          lighten($brand, 45%);
+$brand-darker:        darken($brand, 10%);
+$brand-light:         lighten($brand, 10%);
+$brand-lighter:       #d6ff9a;
 $red:                 #ff6138;
 $yellow-light:        #fff98f;
 
@@ -42,7 +42,7 @@ $gray-color:          #999;
 /* Link colors
    ================================================================================================================== */
 
-$link-color:          $green;
+$link-color:          $brand;
 $link-color-hover:    darken($link-color, 10%);
 
 

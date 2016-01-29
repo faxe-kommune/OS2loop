@@ -99,7 +99,7 @@
   padding: 0;
   white-space: nowrap;
 
-  @include custom-links($green, $green, $green);
+  @include custom-links($brand, $brand, $brand);
 
   a {
     &:before {
@@ -110,7 +110,7 @@
     }
 
     &:hover {
-      color: $green;
+      color: $brand;
     }
   }
 }

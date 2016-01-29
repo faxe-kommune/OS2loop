@@ -80,20 +80,20 @@
 
 .dashboard--filter-links {
   text-decoration: none;
-  @include custom-links($green, $white);
+  @include custom-links($brand, $white);
 
   &.is-active {
-    background: $green;
+    background: $brand;
     color: $white;
   }
 }
 
 .dashboard--sort-links {
   text-decoration: none;
-  @include custom-links($green, $white);
+  @include custom-links($brand, $white);
 
   &.is-active {
-    background: $green;
+    background: $brand;
     color: $white;
   }
 }
@@ -101,7 +101,7 @@
 .dashboard--filter-link {
   background: $white;
   box-sizing: border-box;
-  border: 1px solid $green;
+  border: 1px solid $brand;
   border-right: 0;
   display: inline-block;
   margin-left: -4px;
@@ -110,7 +110,7 @@
   width: 50%;
 
   &.is-active {
-    background: $green;
+    background: $brand;
     color: $white;
   }
 
@@ -119,7 +119,7 @@
   }
 
   &:last-child {
-    border: 1px solid $green;
+    border: 1px solid $brand;
     border-radius: (0 .5em .5em 0);
   }
 }
@@ -127,7 +127,7 @@
 .dashboard--sort-link {
   background: $white;
   box-sizing: border-box;
-  border: 1px solid $green;
+  border: 1px solid $brand;
   border-right: 0;
   display: inline-block;
   margin-left: -4px;
@@ -136,7 +136,7 @@
   width: 25%;
 
   &.is-active {
-    background: $green;
+    background: $brand;
     color: $white;
   }
 
@@ -145,7 +145,7 @@
   }
 
   &:last-child {
-    border: 1px solid $green;
+    border: 1px solid $brand;
     border-radius: (0 .5em .5em 0);
   }
 }
@@ -154,7 +154,7 @@
   width: 33.33%;
 
   &.is-last {
-    border: 1px solid $green;
+    border: 1px solid $brand;
     border-radius: (0 .5em .5em 0);
   }
 

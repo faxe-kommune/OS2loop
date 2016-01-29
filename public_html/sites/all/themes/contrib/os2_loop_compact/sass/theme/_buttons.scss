@@ -33,11 +33,11 @@
 .button--action {
   @extend %button;
 
-  background-color: $green-light;
-  border: 1px solid $green;
+  background-color: $brand-light;
+  border: 1px solid $brand;
   color: $white;
 
-  @include text-shadow(1px 1px 0 darken($green, 10%));
+  @include text-shadow(1px 1px 0 darken($brand, 10%));
 
   &:link,
   &:visited {
@@ -46,7 +46,7 @@
   }
 
   &:hover {
-    background-color: $green;
+    background-color: $brand;
   }
 }
 

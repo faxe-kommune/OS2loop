@@ -51,7 +51,7 @@
   @include breakpoint(45em) {
     display: block;
 
-    background-color: $green;
+    background-color: $brand;
 
     ul {
       list-style-type: none;
@@ -68,7 +68,7 @@
 .block-module--user-links-header {
   @extend .block-module--header;
 
-  border-bottom: 1px solid $green-light;
+  border-bottom: 1px solid $brand-light;
   color: $white;
   padding-bottom: 0.5em;
 }
@@ -80,7 +80,7 @@
   @include custom-menu-links($white);
 
   // Override the border color from element-spacing mixin.
-  border-bottom-color: $green-light;
+  border-bottom-color: $brand-light;
 
   &.active {
     font-weight: bold;
@@ -122,7 +122,7 @@
   border-bottom-color: $gray-light;
 
   @include element-spacing(1em);
-  @include custom-menu-links($green);
+  @include custom-menu-links($brand);
 
   &:last-child {
     @include reset-element-spacing();

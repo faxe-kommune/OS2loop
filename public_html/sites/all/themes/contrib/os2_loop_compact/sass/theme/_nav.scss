@@ -37,7 +37,7 @@
     margin-left: .7em;
     width: 2.75em;
 
-    background-color: $green-light;
+    background-color: $brand-light;
     line-height: 2em;
     text-align: center;
 
@@ -48,16 +48,16 @@
     }
 
     &:hover {
-      background-color: lighten($green-light, 10%);
+      background-color: lighten($brand-light, 10%);
     }
 
     &.active-trail,
     &.active {
       background-color: $gray-lightest;
-      color: $green;
+      color: $brand;
 
       &:hover {
-        background-color: $green-light;
+        background-color: $brand-light;
         color: $gray-lightest;
       }
     }
@@ -184,7 +184,7 @@
     padding-right: 1.25em;
     padding-left: 1.25em;
 
-    background-color: $green-light;
+    background-color: $brand-light;
     line-height: 2.5em;
 
     @include border-radius(0 0 $border-radius $border-radius);
@@ -238,7 +238,7 @@
 
 
   .nav-dropdown--link {
-    border-bottom: 1px solid lighten($green-light, 10%);
+    border-bottom: 1px solid lighten($brand-light, 10%);
     margin-bottom: .5em;
     padding-bottom: .5em;
 
@@ -290,10 +290,10 @@
   height: 100%;
   width: 76%;
 
-  background-color: $green;
+  background-color: $brand;
 
   @include box-sizing(border-box);
-  @include box-shadow(5px 0 8px darken($green, 10%) inset);
+  @include box-shadow(5px 0 8px darken($brand, 10%) inset);
   @include transform(translate3d(100%, 0, 0));
   @include backface-visibility(hidden);
 
@@ -322,7 +322,7 @@
   .nav-dropdown--link {
     @include element-spacing(1em);
 
-    border-bottom-color: $green-light;
+    border-bottom-color: $brand-light;
 
     display: block;
 
