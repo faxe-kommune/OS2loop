@@ -44,7 +44,7 @@ function os2_loop_compact_preprocess_page(&$variables) {
 
   // Fetch a user block (my content) on user pages).
   if ($arg[0] == 'user') {
-    $variables['os2_loop_compact_user_my_content'] = module_invoke('os2_loop_compact_user', 'block_view', 'os2_loop_compact_user_my_content');
+    $variables['loop_user_my_content'] = module_invoke('loop_user', 'block_view', 'loop_user_my_content');
     if (module_exists('pcp')) {
       $variables['user_completion_block'] = module_invoke('pcp', 'block_view', 'pcp_profile_percent_complete');
     }
@@ -52,20 +52,20 @@ function os2_loop_compact_preprocess_page(&$variables) {
   }
 
   if ($arg[0] == 'front') {
-    $variables['os2_loop_compact_frontpage_welcometext'] = module_invoke('os2_loop_compact_frontpage', 'block_view', 'os2_loop_compact_frontpage_welcometext');
+    $variables['loop_frontpage_welcometext'] = module_invoke('loop_frontpage', 'block_view', 'loop_frontpage_welcometext');
   }
 
   // Load Loop primary menu.
-  if (module_exists('os2_loop_compact_navigation') && ($user->uid > 0)) {
+  if (module_exists('loop_navigation') && ($user->uid > 0)) {
     $variables['main_menu_block'] = module_invoke('system', 'block_view', 'main-menu');
     $variables['management_menu_block'] = module_invoke('system', 'block_view', 'management');
-    $variables['primary_menu_block'] = module_invoke('menu', 'block_view', 'menu-os2_loop_compact-primary-menu');
+    $variables['primary_menu_block'] = module_invoke('menu', 'block_view', 'menu-loop-primary-menu');
   }
 
   // Load Loop user menu.
-  if (module_exists('os2_loop_compact_user') && $arg[0] == 'user') {
+  if (module_exists('loop_user') && $arg[0] == 'user') {
     $variables['user_menu_block'] = module_invoke('system', 'block_view', 'user-menu');
-    $variables['user_public_block'] = module_invoke('os2_loop_compact_user', 'block_view', 'os2_loop_compact_user_my_content');
+    $variables['user_public_block'] = module_invoke('loop_user', 'block_view', 'loop_user_my_content');
   }
 
   // Check if we are using a panel page to define layout.
@@ -106,7 +106,7 @@ function os2_loop_compact_preprocess_node(&$variables) {
   $author = user_load($variables['node']->uid);
 
   // Fetch user metadata.
-  $variables['author_name'] = _os2_loop_compact_fetch_full_name($author);
+  $variables['author_name'] = _loop_fetch_full_name($author);
 
   if (is_object($author)) {
 
@@ -118,7 +118,7 @@ function os2_loop_compact_preprocess_node(&$variables) {
     $variables['place'] = $wrapper->field_location_place->value();
   }
 
-  $variables['author_image'] = _os2_loop_compact_fetch_author_image($author);
+  $variables['author_image'] = _loop_fetch_author_image($author);
 
   // Add has comments class.
   if ($variables['comment_count'] > 0) {
@@ -131,7 +131,7 @@ function os2_loop_compact_preprocess_node(&$variables) {
   // Fetch files related to post.
   if ($variables['type'] == 'post') {
     if (!empty($variables['field_file_upload'])) {
-      $variables['files'] = _os2_loop_compact_fetch_files('node', $variables['node']);
+      $variables['files'] = _loop_fetch_files('node', $variables['node']);
     }
   }
 
@@ -161,7 +161,7 @@ function os2_loop_compact_preprocess_block(&$variables) {
   }
 
   // Are we dealing with the access denied or page not found block?
-  if ($variables['user']->uid == 0 && !in_array(arg(0), array('user', 'os2_loop_compact_saml_redirect')) && $variables['is_front'] == FALSE) {
+  if ($variables['user']->uid == 0 && !in_array(arg(0), array('user', 'loop_saml_redirect')) && $variables['is_front'] == FALSE) {
     if ($variables['block']->module == 'system' && $variables['block']->delta == 'main') {
       $variables['content'] = '<div class="messages error">' . $variables['content'] . '</div>';
     }
@@ -181,8 +181,8 @@ function os2_loop_compact_preprocess_panels_pane(&$variables) {
   }
 
   // Add template for "notify friend" box.
-  if ($variables['pane']->type == 'os2_loop_compact_friend_notification_pane') {
-    $variables['theme_hook_suggestions'][] = 'panels_pane__os2_loop_compact_friend_notification';
+  if ($variables['pane']->type == 'loop_friend_notification_pane') {
+    $variables['theme_hook_suggestions'][] = 'panels_pane__loop_friend_notification';
   }
 
   // Add template for flag subscribe button on post node.
@@ -315,7 +315,7 @@ function os2_loop_compact_menu_local_tasks($variables) {
  * by users. Forms the header menu together with primary menu.
  */
 function os2_loop_compact_menu_tree__main_menu($variables) {
-  $theme_path = drupal_get_path('theme', 'os2_loop_compact');
+  $theme_path = drupal_get_path('theme', 'loop');
 
   // Add notification link.
   if (_os2_loop_compact_print_notification_tab()) {
@@ -334,8 +334,8 @@ function os2_loop_compact_menu_tree__main_menu($variables) {
       'html' => 'TRUE',
     )) . $variables['tree'];
 
-  // If os2_loop_compact navigation exists add a mobile drop down navigation.
-  if (module_exists('os2_loop_compact_navigation')) {
+  // If loop navigation exists add a mobile drop down navigation.
+  if (module_exists('loop_navigation')) {
     $element['#localized_options']['attributes']['class'][] = 'last leaf nav--toggle-mobile-nav js-toggle-mobile-nav nolink';
 
     // Allow images in the links.
@@ -359,17 +359,17 @@ function os2_loop_compact_menu_tree__main_menu($variables) {
 }
 
 /**
- * Implements theme_menu_tree__menu_os2_loop_compact_primary_menu().
+ * Implements theme_menu_tree__menu_loop_primary_menu().
  *
  * User generated link.
  * Forms the header menu together with main menu.
  */
-function os2_loop_compact_menu_tree__menu_os2_loop_compact_primary_menu($variables) {
+function os2_loop_compact_menu_tree__menu_loop_primary_menu($variables) {
   return $variables['tree'];
 }
 
 /**
- * Implements theme_menu_tree__menu_os2_loop_compact_primary_menu().
+ * Implements theme_menu_tree__menu_loop_primary_menu().
  *
  * User generated link.
  * Forms the header menu together with main menu.
@@ -382,7 +382,7 @@ function os2_loop_compact_menu_tree__management($variables) {
  * Implements theme_menu_link().
  */
 function os2_loop_compact_menu_link__main_menu($variables) {
-  $theme_path = drupal_get_path('theme', 'os2_loop_compact');
+  $theme_path = drupal_get_path('theme', 'loop');
   $element = $variables['element'];
 
   // Add images to links depending on the path of the link.
@@ -419,8 +419,8 @@ function os2_loop_compact_menu_link__main_menu($variables) {
 /**
  * Implements theme_menu_link().
  */
-function os2_loop_compact_menu_link__menu_os2_loop_compact_primary_menu($variables) {
-  $theme_path = drupal_get_path('theme', 'os2_loop_compact');
+function os2_loop_compact_menu_link__menu_loop_primary_menu($variables) {
+  $theme_path = drupal_get_path('theme', 'loop');
   $element = $variables['element'];
 
   // Sub item exist (Element is parent).
@@ -467,7 +467,7 @@ function os2_loop_compact_menu_link__menu_os2_loop_compact_primary_menu($variabl
  * Implements theme_menu_link().
  */
 function os2_loop_compact_menu_link__management($variables) {
-  $theme_path = drupal_get_path('theme', 'os2_loop_compact');
+  $theme_path = drupal_get_path('theme', 'loop');
   $element = $variables['element'];
 
   if ($element['#href'] == 'admin') {
@@ -539,8 +539,8 @@ function os2_loop_compact_fieldset($variables) {
 function os2_loop_compact_preprocess_user_profile(&$variables) {
   $account = $variables['elements']['#account'];
 
-  $variables['full_name'] = _os2_loop_compact_fetch_full_name($account);
-  $variables['os2_loop_compact_user_best_answers'] = module_invoke('os2_loop_compact_user', 'block_view', 'os2_loop_compact_user_best_answers');
+  $variables['full_name'] = _loop_fetch_full_name($account);
+  $variables['loop_user_best_answers'] = module_invoke('loop_user', 'block_view', 'loop_user_best_answers');
 
   // Helpful $user_profile variable for templates.
   foreach (element_children($variables['elements']) as $key) {
@@ -578,7 +578,7 @@ function os2_loop_compact_form_user_login_alter(&$form) {
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function os2_loop_compact_form_views_form_os2_loop_compact_user_subscriptions_panel_pane_1_alter(&$form, &$form_state, $form_id) {
+function os2_loop_compact_form_views_form_loop_user_subscriptions_panel_pane_1_alter(&$form, &$form_state, $form_id) {
   // Add form class.
   $form['#attributes']['class'][] = 'vbo-views-form';
 
@@ -625,13 +625,13 @@ function os2_loop_compact_form_views_form_os2_loop_compact_user_subscriptions_pa
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function os2_loop_compact_form_views_form_os2_loop_compact_user_taxonomy_subscriptions_panel_pane_1_alter(&$form, &$form_state, $form_id) {
+function os2_loop_compact_form_views_form_loop_user_taxonomy_subscriptions_panel_pane_1_alter(&$form, &$form_state, $form_id) {
   // Add form class.
   $form['#attributes']['class'][] = 'vbo-views-form';
 
   // Copy button from field group.
   if (!empty($form['select'])) {
-    $buttonKey = 'rules_component::os2_loop_compact_notification_remove_taxonomy_subscription';
+    $buttonKey = 'rules_component::loop_notification_remove_taxonomy_subscription';
     if (array_key_exists($buttonKey, $form['select'])) {
       $form['rules_component::rules_remove_subscription'] = $form['select'][$buttonKey];
     } else {
@@ -641,7 +641,7 @@ function os2_loop_compact_form_views_form_os2_loop_compact_user_taxonomy_subscri
           '#value' => t('Remove subscription'),
           '#validate' => array('views_bulk_operations_form_validate'),
           '#submit' => array('views_bulk_operations_form_submit'),
-          '#operation_id' => 'rules_component::os2_loop_compact_notification_remove_taxonomy_subscription'
+          '#operation_id' => 'rules_component::loop_notification_remove_taxonomy_subscription'
       );
     }
   }
@@ -695,7 +695,7 @@ function os2_loop_compact_form_user_register_form_alter(&$form) {
  */
 function os2_loop_compact_form_views_exposed_form_alter(&$form) {
   if (arg(1) == 'dashboard') {
-    if ($form['#id'] == 'views-exposed-form-os2_loop_compact-editor-users-panel-pane-1') {
+    if ($form['#id'] == 'views-exposed-form-loop-editor-users-panel-pane-1') {
       $form['combine']['#attributes']['placeholder'] = t('Type name, username, email or profession to filter the list');
     }
     else {
@@ -726,7 +726,7 @@ function os2_loop_compact_form_search_api_page_search_form_default_alter(&$form)
 function os2_loop_compact_form_comment_form_alter(&$form) {
   $variables['user_obj'] = user_load($GLOBALS['user']->uid);
   if (!empty($variables['user_obj'])) {
-    $variables['user_name'] = _os2_loop_compact_fetch_full_name($variables['user_obj']);
+    $variables['user_name'] = _loop_fetch_full_name($variables['user_obj']);
 
     // Load entity wrapper.
     $wrapper = entity_metadata_wrapper('user', $variables['user_obj']);
@@ -734,7 +734,7 @@ function os2_loop_compact_form_comment_form_alter(&$form) {
     // Get job title.
     $variables['jobtitle'] = $wrapper->field_job_title->value();
     $variables['place'] = $wrapper->field_location_place->value();
-    $variables['author_image'] = _os2_loop_compact_fetch_author_image($variables['user_obj']);
+    $variables['author_image'] = _loop_fetch_author_image($variables['user_obj']);
   }
 
   $form['#prefix'] = theme('comment_form_prefix', $variables);
@@ -808,7 +808,7 @@ function os2_loop_compact_theme($existing, $type, $theme, $path) {
   return array(
     'comment_form_prefix' => array(
       'variables' => array(),
-      'path' => drupal_get_path('theme', 'os2_loop_compact') . '/templates/forms',
+      'path' => drupal_get_path('theme', 'loop') . '/templates/forms',
       'template' => 'comment-form-prefix',
     ),
   );
@@ -823,10 +823,10 @@ function os2_loop_compact_preprocess_comment(&$variables) {
   // Make the content author object available.
   $variables['comment']->account = user_load($variables['comment']->uid);
 
-  $variables['comment_author_name'] = _os2_loop_compact_fetch_full_name($variables['comment']->account);
-  $variables['comment_author_image'] = _os2_loop_compact_fetch_author_image($variables['comment']->account);
+  $variables['comment_author_name'] = _loop_fetch_full_name($variables['comment']->account);
+  $variables['comment_author_image'] = _loop_fetch_author_image($variables['comment']->account);
 
-  $variables['comment_body'] = _os2_loop_compact_fetch_comment_body($variables['comment']);
+  $variables['comment_body'] = _loop_fetch_comment_body($variables['comment']);
 
   $comment_author = $variables['comment']->account;
   if (is_object($comment_author)) {
@@ -843,7 +843,7 @@ function os2_loop_compact_preprocess_comment(&$variables) {
   // Fetch files related to the comment.
   if ($variables['node']->type == 'post') {
     if (!empty($variables['field_file_upload_comment'])) {
-      $variables['files'] = _os2_loop_compact_fetch_files('comment', $variables['comment']);
+      $variables['files'] = _loop_fetch_files('comment', $variables['comment']);
     }
   }
 
@@ -857,11 +857,11 @@ function os2_loop_compact_preprocess_comment(&$variables) {
 }
 
 /**
- * Implements hook_preprocess_os2_loop_compact_post_subscription_list().
+ * Implements hook_preprocess_loop_post_subscription_list().
  *
  * Preprocesss function for displaying subscribe/un-subscribe on nodes.
  */
-function os2_loop_compact_preprocess_os2_loop_compact_post_subscription_list(&$vars) {
+function os2_loop_compact_preprocess_loop_post_subscription_list(&$vars) {
   $vars['custom_link'] = l($vars['link']['#text'], $vars['link']['#path'], array('attributes' => array('class' => array('block-module--link')), 'html' => 'TRUE', 'query' => array($vars['link']['#query'])));
 
   if ($vars['link']['#text'] == 'Subscribe') {
@@ -915,7 +915,7 @@ function os2_loop_compact_preprocess_views_view(&$vars) {
   }
 
   // If the view is one of the two front page views, add a few user variables.
-  if ($vars['view']->name == 'os2_loop_compact_questions_by_user_profession' || $vars['view']->name == 'os2_loop_compact_questions_by_user_competence') {
+  if ($vars['view']->name == 'loop_questions_by_user_profession' || $vars['view']->name == 'loop_questions_by_user_competence') {
     if ($vars['user']->uid > 0) {
       // Fetch full user obj.
       $user_obj = user_load($vars['user']->uid);
@@ -923,7 +923,7 @@ function os2_loop_compact_preprocess_views_view(&$vars) {
       // Load entity wrapper.
       $wrapper = entity_metadata_wrapper('user', $user_obj);
 
-      if ($vars['view']->name == 'os2_loop_compact_questions_by_user_profession') {
+      if ($vars['view']->name == 'loop_questions_by_user_profession') {
         $items = $wrapper->field_profession->value();
         $user_professions = array();
         foreach ($items as $item) {
@@ -935,7 +935,7 @@ function os2_loop_compact_preprocess_views_view(&$vars) {
         $vars['user_profession'] = $user_professions;
       }
 
-      if ($vars['view']->name == 'os2_loop_compact_questions_by_user_competence') {
+      if ($vars['view']->name == 'loop_questions_by_user_competence') {
         $items = $wrapper->field_area_of_expertise->value();
         $user_area_of_expertises = array();
         foreach ($items as $item) {
@@ -960,9 +960,9 @@ function os2_loop_compact_preprocess_views_view(&$vars) {
  */
 function _os2_loop_compact_print_notification_tab() {
   // We run the new message count in this function called from
-  // os2_loop_compact_links__system_primary_menu().
+  // loop_links__system_primary_menu().
   // since it should display on all pages.
-  if (module_exists('os2_loop_compact_notification') && $GLOBALS['user']->uid > 0) {
+  if (module_exists('loop_notification') && $GLOBALS['user']->uid > 0) {
     $new_message_count = _os2_loop_compact_fetch_user_new_notifications();
 
     // If new messages exist.
