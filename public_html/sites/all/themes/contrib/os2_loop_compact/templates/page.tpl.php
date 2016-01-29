@@ -129,10 +129,18 @@ if (isset($primary_menu_block['content'])): ?>
   </div>
 </header>
 
+<?php if ($messages): ?>
+  <div id="messages">
+    <?php if ($messages): ?>
+      <?php print $messages; ?>
+    <?php endif; ?>
+  </div>
+<?php endif; ?>
+
 <?php if (isset($page['pagetop'])): ?>
   <div class="section">
     <div class="layout-frontpage">
-        <?php print render($page['pagetop']); ?>
+      <?php print render($page['pagetop']); ?>
     </div>
   </div>
 <?php endif; ?>
@@ -152,9 +160,6 @@ if (isset($primary_menu_block['content'])): ?>
 <?php if (user_is_anonymous()): ?>
   <div class="layout-no-wrapper">
     <div class="layout--inner">
-      <?php if ($messages): ?>
-        <?php print $messages; ?>
-      <?php endif; ?>
       <?php print render($page['content']); ?>
     </div>
   </div>
@@ -162,9 +167,6 @@ if (isset($primary_menu_block['content'])): ?>
   <div class="<?php print $layout_class;?>">
     <div class="layout--inner">
       <?php print render($page['header']); ?>
-      <?php if ($messages): ?>
-        <?php print $messages; ?>
-      <?php endif; ?>
       <?php if (isset($loop_user_my_content)): ?>
         <div class="layout-element-alpha">
           <?php if ($tabs): ?>
@@ -191,9 +193,6 @@ if (isset($primary_menu_block['content'])): ?>
     </div>
   </div>
 <?php else: ?>
-  <?php if ($messages): ?>
-    <?php print $messages; ?>
-  <?php endif; ?>
   <?php print render($page['content']); ?>
 <?php endif;?>
 
