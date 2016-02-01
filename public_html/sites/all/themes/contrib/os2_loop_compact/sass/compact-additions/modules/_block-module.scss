@@ -1,0 +1,12 @@
+.block-module--inner {
+  padding: 1.0em;
+}
+
+.block-module--my-content-item,
+.block-module--user-links-item {
+  @include element-spacing(.5em);
+
+  &:last-child {
+    @include reset-element-spacing();
+  }
+}

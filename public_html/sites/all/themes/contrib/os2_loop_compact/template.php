@@ -106,7 +106,7 @@ function os2_loop_compact_preprocess_node(&$variables) {
   $author = user_load($variables['node']->uid);
 
   // Fetch user metadata.
-  $variables['author_name'] = _loop_fetch_full_name($author);
+  $variables['author_name'] = _os2_loop_compact_fetch_full_name($author);
 
   if (is_object($author)) {
 
@@ -118,7 +118,7 @@ function os2_loop_compact_preprocess_node(&$variables) {
     $variables['place'] = $wrapper->field_location_place->value();
   }
 
-  $variables['author_image'] = _loop_fetch_author_image($author);
+  $variables['author_image'] = _os2_loop_compact_fetch_author_image($author);
 
   // Add has comments class.
   if ($variables['comment_count'] > 0) {
@@ -131,7 +131,7 @@ function os2_loop_compact_preprocess_node(&$variables) {
   // Fetch files related to post.
   if ($variables['type'] == 'post') {
     if (!empty($variables['field_file_upload'])) {
-      $variables['files'] = _loop_fetch_files('node', $variables['node']);
+      $variables['files'] = _os2_loop_compact_fetch_files('node', $variables['node']);
     }
   }
 
@@ -539,7 +539,7 @@ function os2_loop_compact_fieldset($variables) {
 function os2_loop_compact_preprocess_user_profile(&$variables) {
   $account = $variables['elements']['#account'];
 
-  $variables['full_name'] = _loop_fetch_full_name($account);
+  $variables['full_name'] = _os2_loop_compact_fetch_full_name($account);
   $variables['loop_user_best_answers'] = module_invoke('loop_user', 'block_view', 'loop_user_best_answers');
 
   // Helpful $user_profile variable for templates.
@@ -726,7 +726,7 @@ function os2_loop_compact_form_search_api_page_search_form_default_alter(&$form)
 function os2_loop_compact_form_comment_form_alter(&$form) {
   $variables['user_obj'] = user_load($GLOBALS['user']->uid);
   if (!empty($variables['user_obj'])) {
-    $variables['user_name'] = _loop_fetch_full_name($variables['user_obj']);
+    $variables['user_name'] = _os2_loop_compact_fetch_full_name($variables['user_obj']);
 
     // Load entity wrapper.
     $wrapper = entity_metadata_wrapper('user', $variables['user_obj']);
@@ -734,7 +734,7 @@ function os2_loop_compact_form_comment_form_alter(&$form) {
     // Get job title.
     $variables['jobtitle'] = $wrapper->field_job_title->value();
     $variables['place'] = $wrapper->field_location_place->value();
-    $variables['author_image'] = _loop_fetch_author_image($variables['user_obj']);
+    $variables['author_image'] = _os2_loop_compact_fetch_author_image($variables['user_obj']);
   }
 
   $form['#prefix'] = theme('comment_form_prefix', $variables);
@@ -823,10 +823,10 @@ function os2_loop_compact_preprocess_comment(&$variables) {
   // Make the content author object available.
   $variables['comment']->account = user_load($variables['comment']->uid);
 
-  $variables['comment_author_name'] = _loop_fetch_full_name($variables['comment']->account);
-  $variables['comment_author_image'] = _loop_fetch_author_image($variables['comment']->account);
+  $variables['comment_author_name'] = _os2_loop_compact_fetch_full_name($variables['comment']->account);
+  $variables['comment_author_image'] = _os2_loop_compact_fetch_author_image($variables['comment']->account);
 
-  $variables['comment_body'] = _loop_fetch_comment_body($variables['comment']);
+  $variables['comment_body'] = _os2_loop_compact_fetch_comment_body($variables['comment']);
 
   $comment_author = $variables['comment']->account;
   if (is_object($comment_author)) {
@@ -843,7 +843,7 @@ function os2_loop_compact_preprocess_comment(&$variables) {
   // Fetch files related to the comment.
   if ($variables['node']->type == 'post') {
     if (!empty($variables['field_file_upload_comment'])) {
-      $variables['files'] = _loop_fetch_files('comment', $variables['comment']);
+      $variables['files'] = _os2_loop_compact_fetch_files('comment', $variables['comment']);
     }
   }
 

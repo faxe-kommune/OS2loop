@@ -1,0 +1,34 @@
+
+.guide-container {
+  @include zen-grid-container();
+
+  margin: {
+    left: (0 - ($zen-gutter-width / 2));
+    right: (0 - ($zen-gutter-width / 2));
+  }
+}
+
+.guide-column-1 {
+  @include zen-grid-item(4, 1);
+}
+
+.guide-column-2 {
+  @include zen-grid-item(4, 5);
+}
+
+.guide-column-3 {
+  @include zen-grid-item(4, 9);
+}
+
+.field-collection-view {
+
+  padding: {
+    left: 0;
+    right: 0;
+  }
+
+  margin: {
+    left: 0;
+    right: 0;
+  }
+}

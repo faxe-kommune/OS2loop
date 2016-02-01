@@ -1,0 +1,29 @@
+/* Dropdown menu
+ * We use the same menu as in mobile, where we don't want any of this stuff. This results in some needed nesting.
+   ================================================================================================================== */
+
+.nav-dropdown {
+
+  .nav-dropdown--item {
+    position: absolute;
+    top: 2.5em;
+    right: 0;
+    z-index: 99;
+
+    display: none;
+    padding-top: .5em;
+    padding-right: 1.25em;
+    padding-left: 1.25em;
+
+    background-color: $brand-light;
+    line-height: 2.0em;
+
+    @include border-radius(0 0 $border-radius $border-radius);
+  }
+
+  .nav-dropdown--link {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    text-align: left;
+  }
+}

@@ -1,0 +1,12 @@
+diff --git a/epsacrop.module b/epsacrop.module
+index 036a16d..42f4686 100644
+--- a/epsacrop.module
++++ b/epsacrop.module
+@@ -424,6 +424,7 @@ function epsacrop_form_field_ui_field_edit_form_alter(&$form, $form_state) {
+  */
+ function epsacrop_element_info_alter(&$type) {
+   $type['managed_file']['#after_build'][] = '_epsacrop_process_form_element';
++  $type['media']['#after_build'][] = '_epsacrop_process_form_element';
+ }
+ 
+ /**

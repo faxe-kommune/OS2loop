@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Wiki feature.
+ */
+
+include_once 'wiki.features.inc';
